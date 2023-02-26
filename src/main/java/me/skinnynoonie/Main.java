@@ -7,7 +7,6 @@ import me.skinnynoonie.overlay.stats.Overlay;
 import me.skinnynoonie.storage.Config;
 import me.skinnynoonie.storage.OverlayData;
 
-import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -17,7 +16,7 @@ public class Main implements QueueListener {
 
     private Overlay overlay;
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) {
         Main main = new Main();
         QueueHandler.registerListener(main);
 

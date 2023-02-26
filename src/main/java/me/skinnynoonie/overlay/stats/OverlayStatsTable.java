@@ -17,44 +17,50 @@ public class OverlayStatsTable extends JTable {
     }
 
     public void add(OverlayData data) {
-        String[] overlayData = new String[]{
-                data.getLevel(),
-                data.getUsername(),
-                data.getWinstreak(),
-                data.getFKDR(),
-                data.getWinLossRatio(),
-                data.getWins(),
-                data.getLosses()
-        };
-        String dataNoHtmlFKDR = data.getFKDR().replaceAll("(<(\\S*?)[^>]>.?<\\1>|<.*?>)", "");
-        if(dataNoHtmlFKDR.equals("?")) {
-            ((DefaultTableModel) getModel()).insertRow(0, overlayData);
-            return;
-        }
-        double fkdr = Double.parseDouble(dataNoHtmlFKDR);
-        for(int x = 0; x < getRowCount(); x++) {
-            String value = ((String) getModel().getValueAt(x, 3)).replaceAll("(<(\\S*?)[^>]>.?<\\1>|<.*?>)", "");
-            if(value.equals("?")) continue;
-            if(Double.parseDouble(value) < fkdr) {
-                ((DefaultTableModel) getModel()).insertRow(x, overlayData);
+        try {
+            String[] overlayData = new String[]{
+                    data.getLevel(),
+                    data.getUsername(),
+                    data.getWinstreak(),
+                    data.getFKDR(),
+                    data.getWinLossRatio(),
+                    data.getWins(),
+                    data.getLosses()
+            };
+            String dataNoHtmlFKDR = data.getFKDR().replaceAll("(<(\\S*?)[^>]>.?<\\1>|<.*?>)", "");
+            if (dataNoHtmlFKDR.equals("?")) {
+                ((DefaultTableModel) getModel()).insertRow(0, overlayData);
                 return;
             }
-        }
-        ((DefaultTableModel) getModel()).addRow(overlayData);
+            double fkdr = Double.parseDouble(dataNoHtmlFKDR);
+            for (int x = 0; x < getRowCount(); x++) {
+                String value = ((String) getModel().getValueAt(x, 3)).replaceAll("(<(\\S*?)[^>]>.?<\\1>|<.*?>)", "");
+                if (value.equals("?")) continue;
+                if (Double.parseDouble(value) < fkdr) {
+                    ((DefaultTableModel) getModel()).insertRow(x, overlayData);
+                    return;
+                }
+            }
+            ((DefaultTableModel) getModel()).addRow(overlayData);
+        }catch (Exception ignored) {}
     }
 
     public void clear() {
-        ((DefaultTableModel) getModel()).setRowCount(0);
+        try {
+            ((DefaultTableModel) getModel()).setRowCount(0);
+        }catch (Exception ignored) {}
     }
 
     public void remove(String username) {
-        for(int x = 0; x < getRowCount(); x++) {
-            String value = (String) getModel().getValueAt(x, 1);
-            if(value.replaceAll("(<(\\S*?)[^>]>.?<\\1>|<.*?>)", "").equals(username)) { // This regex matches HTML tags! Not made by me.
-                ((DefaultTableModel) getModel()).removeRow(x);
-                return;
+        try {
+            for (int x = 0; x < getRowCount(); x++) {
+                String value = (String) getModel().getValueAt(x, 1);
+                if (value.replaceAll("(<(\\S*?)[^>]>.?<\\1>|<.*?>)", "").equals(username)) { // This regex matches HTML tags! Not made by me.
+                    ((DefaultTableModel) getModel()).removeRow(x);
+                    return;
+                }
             }
-        }
+        }catch (Exception ignored){}
     }
 
     public boolean contains(String username) {

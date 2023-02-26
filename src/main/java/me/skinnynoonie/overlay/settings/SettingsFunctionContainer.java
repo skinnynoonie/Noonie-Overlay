@@ -54,5 +54,26 @@ public class SettingsFunctionContainer extends JPanel {
                 Config.setAntiSniperApiKey(textFieldAS.getText());
             }
         });
+
+        add(new JLabel("<html><font color=white>Enter your Minecraft Log Directory(Restart the overlay)</html>"));
+        JTextField textFieldDir = new JTextField();
+        textFieldDir.setText(String.join("\n", Config.getMinecraftLogDir()));
+        textFieldDir.setForeground(new Color(255, 255, 255, 255));
+        textFieldDir.setBackground(Colors.SETTINGS_TEXTAREA_BACKGROUND);
+        textFieldDir.setCaretColor(Color.WHITE);
+        textFieldDir.setPreferredSize(new Dimension(450, 30));
+        add(textFieldDir);
+        textFieldDir.getDocument().addDocumentListener(new DocumentListener() {
+            @Override public void changedUpdate(DocumentEvent e) {}
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                Config.setMinecraftLogDir(textFieldDir.getText());
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                Config.setMinecraftLogDir(textFieldDir.getText());
+            }
+        });
+
     }
 }

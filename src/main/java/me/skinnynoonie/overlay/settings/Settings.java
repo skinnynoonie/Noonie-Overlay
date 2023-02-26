@@ -9,7 +9,7 @@ import java.awt.event.*;
 public class Settings extends JFrame {
 
     private final int width = 500;
-    private final int height = 500;
+    private final int height = 600;
 
     public Settings() {
         setUndecorated(true);

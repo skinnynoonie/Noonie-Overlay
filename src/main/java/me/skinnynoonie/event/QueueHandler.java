@@ -1,5 +1,6 @@
 package me.skinnynoonie.event;
 
+import me.skinnynoonie.storage.Config;
 import me.skinnynoonie.utils.MinecraftChatReader;
 
 import java.io.FileNotFoundException;
@@ -25,9 +26,9 @@ public class QueueHandler {
     private static void initiate() {
         MinecraftChatReader logReader;
         try {
-            logReader = new MinecraftChatReader(System.getProperty("user.home") + "\\.lunarclient\\offline\\multiver\\logs\\latest.log");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+            logReader = new MinecraftChatReader(Config.getMinecraftLogDir());
+        } catch (FileNotFoundException exception) {
+            return;
         }
         logReader.skip();
 
